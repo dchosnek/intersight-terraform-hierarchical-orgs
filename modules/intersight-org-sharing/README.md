@@ -5,6 +5,7 @@ Creates an Intersight organization hierarchy with:
 - child organizations
 - one resource group per child organization
 - IAM sharing rules from every parent org to every child org
+- child org permissions that grant Administrator privileges in the child org and Read-Only in all parents
 
 ## Relationship Diagram
 
@@ -25,8 +26,8 @@ Note: Sharing is many-to-many from all parents to all children.
 module "intersight_org_sharing" {
   source = "./modules/intersight-org-sharing"
 
-  parent_org_names = ["CommonPolicy", "CommonPool"]
-  child_org_names  = ["beta", "pilot", "tme"]
+  parent_org_names = ["parent1", "parent2"]
+  child_org_names  = ["child1", "child2", "child3"]
   tags = [
     {
       key   = "orchestrator"
@@ -34,7 +35,7 @@ module "intersight_org_sharing" {
     },
     {
       key   = "owner"
-      value = "dchosnek"
+      value = "example"
     }
   ]
 }
@@ -66,6 +67,8 @@ No modules.
 | [intersight_organization_organization.children](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/organization_organization) | resource |
 | [intersight_organization_organization.parent](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/organization_organization) | resource |
 | [intersight_resource_group.resource_groups](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/resource_group) | resource |
+| [intersight_iam_privilege_set.admin](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/iam_privilege_set) | data source |
+| [intersight_iam_privilege_set.read_only](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/iam_privilege_set) | data source |
 
 ## Inputs
 
