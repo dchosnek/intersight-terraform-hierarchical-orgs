@@ -1,8 +1,4 @@
-
-locals {
-  description = "Created by Terraform. Do not edit manually."
-}
-
+// specify tags that will applied to each object that accepts tags
 locals {
   tags = [
     {
