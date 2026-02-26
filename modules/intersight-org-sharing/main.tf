@@ -82,10 +82,8 @@ resource "intersight_iam_sharing_rule" "parent_child_relationship" {
 }
 
 locals {
-  # Embedded admin privilege sets applied to each child org.
-  # NOTE: Account-scoped privilege sets are not valid in iam_resource_roles.
-  # Override this list only with resource-scoped privilege sets.
-  administrator_privilege_set_names = [
+  # Built-in admin role names applied to each child org.
+  administrator_role_names = [
     "Catalog Administrator",
     "Device Administrator",
     "HCI Cluster Administrator",
@@ -122,14 +120,10 @@ locals {
   )
 }
 
-// Resolve privilege set Moids by name so we can attach by Moid instead of selector.
-data "intersight_iam_privilege_set" "admin" {
-  for_each = toset(local.administrator_privilege_set_names)
+// Resolve role Moids by name so we can attach by Moid instead of selector.
+data "intersight_iam_role" "by_name" {
+  for_each = toset(concat(local.administrator_role_names, ["Read-Only"]))
   name     = each.value
-}
-
-data "intersight_iam_privilege_set" "read_only" {
-  name = "Read-Only"
 }
 
 // One permission object per child org.
@@ -140,7 +134,7 @@ resource "intersight_iam_permission" "child_org_permission" {
   description = "Administrator on ${each.key}; Read-Only on all parent orgs."
 }
 
-// Attach child-org Administrator privilege sets to each child permission object.
+// Attach child-org Administrator roles to each child permission object.
 resource "intersight_iam_resource_roles" "child_admin_resource_roles" {
   for_each = toset(var.child_org_names)
 
@@ -159,16 +153,16 @@ resource "intersight_iam_resource_roles" "child_admin_resource_roles" {
     moid        = local.org_moids_by_name[each.value]
   }
 
-  dynamic "privilege_sets" {
-    for_each = toset(local.administrator_privilege_set_names)
+  dynamic "roles" {
+    for_each = toset(local.administrator_role_names)
     content {
-      object_type = "iam.PrivilegeSet"
-      moid        = data.intersight_iam_privilege_set.admin[privilege_sets.value].moid
+      object_type = "iam.Role"
+      moid        = one(data.intersight_iam_role.by_name[roles.value].results).moid
     }
   }
 }
 
-// Attach parent-org Read-Only privilege set to each child permission object.
+// Attach parent-org Read-Only role to each child permission object.
 resource "intersight_iam_resource_roles" "child_parent_read_only_resource_roles" {
   for_each = local.child_parent_read_only_targets
 
@@ -187,8 +181,8 @@ resource "intersight_iam_resource_roles" "child_parent_read_only_resource_roles"
     moid        = local.org_moids_by_name[each.value.parent_org]
   }
 
-  privilege_sets {
-    object_type = "iam.PrivilegeSet"
-    moid        = data.intersight_iam_privilege_set.read_only.moid
+  roles {
+    object_type = "iam.Role"
+    moid        = one(data.intersight_iam_role.by_name["Read-Only"].results).moid
   }
 }
