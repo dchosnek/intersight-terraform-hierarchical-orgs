@@ -122,6 +122,16 @@ locals {
   )
 }
 
+// Resolve privilege set Moids by name so we can attach by Moid instead of selector.
+data "intersight_iam_privilege_set" "admin" {
+  for_each = toset(local.administrator_privilege_set_names)
+  name     = each.value
+}
+
+data "intersight_iam_privilege_set" "read_only" {
+  name = "Read-Only"
+}
+
 // One permission object per child org.
 resource "intersight_iam_permission" "child_org_permission" {
   for_each = local.child_permission_names
@@ -153,7 +163,7 @@ resource "intersight_iam_resource_roles" "child_admin_resource_roles" {
     for_each = toset(local.administrator_privilege_set_names)
     content {
       object_type = "iam.PrivilegeSet"
-      selector    = "Name eq '${privilege_sets.value}'"
+      moid        = data.intersight_iam_privilege_set.admin[privilege_sets.value].moid
     }
   }
 }
@@ -179,6 +189,6 @@ resource "intersight_iam_resource_roles" "child_parent_read_only_resource_roles"
 
   privilege_sets {
     object_type = "iam.PrivilegeSet"
-    selector    = "Name eq 'Read-Only'"
+    moid        = data.intersight_iam_privilege_set.read_only.moid
   }
 }
