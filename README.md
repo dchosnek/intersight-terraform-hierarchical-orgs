@@ -1,4 +1,4 @@
-# terraform-intersight-hierarchical-orgs
+# intersight-terraform-hierarchical-orgs
 
 Creates a parent/child organization hierarchy in Cisco Intersight, with sharing rules and permissions so child orgs can consume shared resources from parents.
 
