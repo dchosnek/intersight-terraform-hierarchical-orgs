@@ -67,8 +67,7 @@ No modules.
 | [intersight_organization_organization.children](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/organization_organization) | resource |
 | [intersight_organization_organization.parent](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/organization_organization) | resource |
 | [intersight_resource_group.resource_groups](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/resources/resource_group) | resource |
-| [intersight_iam_privilege_set.admin](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/iam_privilege_set) | data source |
-| [intersight_iam_privilege_set.read_only](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/iam_privilege_set) | data source |
+| [intersight_iam_role.by_name](https://registry.terraform.io/providers/CiscoDevNet/intersight/latest/docs/data-sources/iam_role) | data source |
 
 ## Inputs
 
