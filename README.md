@@ -1,6 +1,8 @@
 # intersight-terraform-hierarchical-orgs
 
-Creates a parent/child organization hierarchy in Cisco Intersight, with sharing rules and permissions so child orgs can consume shared resources from parents.
+I'm using this specifically to create Parent/Child orgs for both IMM and Fleet in my Intersight account.
+
+The module in this repo creates the parent/child relationship along with sharing rules and permissions so child orgs can consume shared resources from parents.
 
 ## Overview
 
