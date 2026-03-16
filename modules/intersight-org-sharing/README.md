@@ -28,16 +28,10 @@ module "intersight_org_sharing" {
 
   parent_org_names = ["parent1", "parent2"]
   child_org_names  = ["child1", "child2", "child3"]
-  tags = [
-    {
-      key   = "orchestrator"
-      value = "terraform"
-    },
-    {
-      key   = "owner"
-      value = "example"
-    }
-  ]
+  tags = {
+    orchestrator = "terraform"
+    owner        = "example"
+  }
 }
 ```
 
@@ -75,7 +69,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_child_org_names"></a> [child\_org\_names](#input\_child\_org\_names) | Names of child organizations that receive shared resources. | `list(string)` | n/a | yes |
 | <a name="input_parent_org_names"></a> [parent\_org\_names](#input\_parent\_org\_names) | Names of parent organizations that share resources to child orgs. | `list(string)` | n/a | yes |
-| <a name="input_tags"></a> [tags](#input\_tags) | Tags applied to organizations and resource groups. | <pre>list(object({<br/>    key   = string<br/>    value = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags applied to organizations and resource groups. | `map(string)` | `{}` | no |
 
 ## Outputs
 

@@ -10,9 +10,6 @@ variable "child_org_names" {
 
 variable "tags" {
   description = "Tags applied to organizations and resource groups."
-  type = list(object({
-    key   = string
-    value = string
-  }))
-  default = []
+  type        = map(string)
+  default     = {}
 }

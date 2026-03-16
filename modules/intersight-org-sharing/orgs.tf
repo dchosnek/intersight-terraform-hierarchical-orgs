@@ -8,8 +8,8 @@ resource "intersight_organization_organization" "parent" {
   dynamic "tags" {
     for_each = var.tags
     content {
-      key   = tags.value.key
-      value = tags.value.value
+      key   = tags.key
+      value = tags.value
     }
   }
 }
@@ -29,8 +29,8 @@ resource "intersight_organization_organization" "children" {
   dynamic "tags" {
     for_each = var.tags
     content {
-      key   = tags.value.key
-      value = tags.value.value
+      key   = tags.key
+      value = tags.value
     }
   }
 }
@@ -39,13 +39,14 @@ resource "intersight_organization_organization" "children" {
 resource "intersight_resource_group" "resource_groups" {
   for_each = toset(var.child_org_names)
 
+  // make all resource groups lowercase and end in -rg
   name = lower("${each.value}-rg")
 
   dynamic "tags" {
     for_each = var.tags
     content {
-      key   = tags.value.key
-      value = tags.value.value
+      key   = tags.key
+      value = tags.value
     }
   }
 }

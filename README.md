@@ -18,20 +18,13 @@ module "intersight_org_sharing" {
   parent_org_names = ["parent1", "parent2"]
   child_org_names  = ["child1", "child2", "child3"]
 
-  tags = [
-    {
-      key   = "orchestrator"
-      value = "terraform"
-    },
-    {
-      key   = "owner"
-      value = "example"
-    }
-  ]
+  tags = {
+    orchestrator = "terraform"
+    owner        = "example"
+  }
 }
 ```
 
 ## Modules
 
 - `./modules/intersight-org-sharing`
-
