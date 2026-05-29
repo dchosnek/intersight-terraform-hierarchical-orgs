@@ -30,3 +30,12 @@ module "intersight_org_sharing" {
 ## Modules
 
 - `./modules/intersight-org-sharing`
+
+## Setting environment variables
+
+To run this locally:
+
+```
+export INTERSIGHT_API_KEY=
+export NTERSIGHT_SECRET_KEY=
+```
