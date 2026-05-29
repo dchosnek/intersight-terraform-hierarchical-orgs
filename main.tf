@@ -13,6 +13,7 @@ module "imm_orgs" {
     "Beta",
     "Demo",
     "Pilot",
+    "Prod",
     "TME",
   ]
 
