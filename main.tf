@@ -13,28 +13,8 @@ module "imm_orgs" {
     "Beta",
     "Demo",
     "Pilot",
-    "Prod",
+    "Fleet",
     "TME",
-  ]
-
-  tags = local.tags
-}
-
-// ============================================================================
-// org structure for fleet management
-// ----------------------------------------------------------------------------
-module "fleet_orgs" {
-  source = "./modules/intersight-org-sharing"
-
-  parent_org_names = [
-    "Definitions",
-  ]
-  child_org_names = [
-    "Deployements",
-    "WestCoast",
-    "Mountain",
-    "Central",
-    "EastCoast",
   ]
 
   tags = local.tags
